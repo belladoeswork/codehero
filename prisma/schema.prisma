@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// prisma/schema.prisma
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id        String     @id @default(uuid())
+  username  String     @unique
+  password  String
+  avatar    String?
+  badge     String?
+  createdAt DateTime   @default(now())
+  answers   Answer[]
+  note      Note?
+  noteId    String?
+  questions Question[]
+  room      Room?      @relation(fields: [roomId], references: [id])
+  roomId    String?
+}
+
+model Room {
+  id         String     @id @default(uuid())
+  name       String
+  isUnlocked Boolean?
+  questions  Question[]
+  answers    Answer[]
+  users      User[]
+}
+
+model Question {
+  id      String   @id @default(uuid())
+  title   String   @unique
+  option1 String?
+  option2 String?
+  option3 String?
+  option4 String?
+  hint    String?
+  answers Answer[]
+  Room    Room     @relation(fields: [roomId], references: [id])
+  roomId  String
+  User    User?    @relation(fields: [userId], references: [id])
+  userId  String?
+}
+
+model Answer {
+  id         String   @id @default(uuid())
+  text       String
+  isCorrect  Boolean
+  createdAt  DateTime @default(now())
+  users      User[]
+  question   Question @relation(fields: [questionId], references: [id])
+  questionId String
+  room       Room     @relation(fields: [roomId], references: [id])
+  roomId     String
+}
+
+model Note {
+  id     String  @id @default(uuid())
+  text   String?
+  user   User    @relation(fields: [userId], references: [id])
+  userId String  @unique
+}
