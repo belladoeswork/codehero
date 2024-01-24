@@ -12,26 +12,19 @@ export default function levelPage() {
   const [gameStarted, setGameStarted] = useState(false);
   const [selectedPlayerData, setSelectedPlayerData] = useState(null);
   const [isMuted, setIsMuted] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
   const audioElement = useRef(new Audio("/audio/LittleR.ogg"));
+  
+  const router = useRouter();
+
+
 
   const handlePlayerSelect = (playerData) => {
     setSelectedPlayerData(playerData);
     setGameStarted(true);
-    audioElement.current.play();
   };
 
   const handleMuteToggle = () => {
     setIsMuted(!isMuted);
-  };
-
-  const handlePauseToggle = () => {
-    setIsPaused(!isPaused);
-    if (isPaused) {
-      audioElement.current.play();
-    } else {
-      audioElement.current.pause();
-    }
   };
 
   useEffect(() => {
@@ -39,7 +32,7 @@ export default function levelPage() {
     audioElement.current.muted = isMuted;
     if (gameStarted) {
       audioElement.current.play();
-    }
+    } 
   }, [gameStarted, isMuted]);
 
   return (
@@ -63,11 +56,6 @@ export default function levelPage() {
           </div>
         )}
       </div>
-      <>
-        <button onClick={handlePauseToggle}>
-          {isPaused ? "Resume" : "Pause"}
-        </button>
-      </>
 
       {!gameStarted && <PlayerSelection onPlayerSelect={handlePlayerSelect} />}
 

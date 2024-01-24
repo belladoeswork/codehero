@@ -1,6 +1,9 @@
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link.js";
 import Game from "./Game.jsx";
 import { Sprite } from "../app/game/classes/Sprite.jsx";
+import { MdExitToApp } from "react-icons/md";
+
 
 const playerData = {
   huntress: {
@@ -145,6 +148,7 @@ export default function playerSelection({ onPlayerSelect }) {
   }, [selectedPlayerData]);
 
   return (
+    <div>
     <div className="container-box">
       <div className="player-selection">
         <h1 className="title"> Select a Player</h1>
@@ -162,6 +166,15 @@ export default function playerSelection({ onPlayerSelect }) {
             </button>
           </div>
         </div>
+      </div>
+      </div>
+      <div className="backbtn">
+        <Link href={"/"}>
+          <button className="bckhelpoutline">
+            <MdExitToApp className="btnIcon" />
+            <span>Back</span>
+          </button>
+        </Link>
       </div>
     </div>
   );
