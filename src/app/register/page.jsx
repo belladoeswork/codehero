@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useRouter } from "next/navigation.js";
 
 import Image from "next/image.js";
-import Logo from "../../../assets/codeHero/codeHeroLogo.png";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -33,7 +32,8 @@ export default function Register() {
 
   return (
     <div className="login-register-container">
-      <Image className="login-register-logo" src={Logo} alt="CodeHero Logo" />
+      <Image className="login-register-logo" src="/assets/codeHero/codeHeroLogo.png" alt="CodeHero Logo" width={150}
+            height={150}/>
       <form onSubmit={handleRegister}>
         <input
           value={username}

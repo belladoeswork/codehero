@@ -3,12 +3,12 @@ import Image from "next/image.js";
 import { useState } from "react";
 import { useRouter } from "next/navigation.js";
 
-import profileImg1 from "@/assets/avatar/9439685.jpg";
-import profileImg2 from "@/assets/avatar/9439833.jpg";
-import avatar1 from "@/assets/avatar/av1.jpg";
-import avatar2 from "@/assets/avatar/av2.jpg";
-import avatar3 from "@/assets/avatar/av3.jpg";
-import avatar4 from "@/assets/avatar/av4.jpg";
+// import profileImg1 from "/assets/avatar/9439685.jpg";
+// import profileImg2 from "/assets/avatar/9439833.jpg";
+// import avatar1 from "/assets/avatar/av1.jpg";
+// import avatar2 from "/assets/avatar/av2.jpg";
+// import avatar3 from "/assets/avatar/av3.jpg";
+// import avatar4 from "/assets/avatar/av4.jpg";
 
 import { CgCloseR } from "react-icons/cg";
 
@@ -61,41 +61,60 @@ export default function AvatarOption({ selectedAvatar, setSelectedAvatar }) {
         </div>
 
         <Image
-          src={avatar1}
-          alt={"avatar image"}
+          // src={avatar1}
+          src="/assets/avatar/av1.jpg"
+          alt="avatar image"
           className="avatar-images"
           onClick={() => handleAvatarClick(avatar1)}
+          width={100}
+            height={100}
         />
         <Image
-          src={avatar2}
-          alt={"avatar image"}
+          // src={avatar2}
+          src="/assets/avatar/av2.jpg"
+          alt="avatar image"
           className="avatar-images"
           onClick={() => handleAvatarClick(avatar2)}
+          width={100}
+            height={100}
         />
         <Image
-          src={avatar3}
-          alt={"avatar image"}
+          // src={avatar3}
+          src="/assets/avatar/av3.jpg"
+          alt="avatar image"
           className="avatar-images"
           onClick={() => handleAvatarClick(avatar3)}
+          width={100}
+            height={100}
         />
         <Image
-          src={avatar4}
-          alt={"avatar image"}
+          // src={avatar4}
+          src="/assets/avatar/av4.jpg"
+          alt="avatar image"
           className="avatar-images"
           onClick={() => handleAvatarClick(avatar4)}
+          width={100}
+            height={100}
         />
         <Image
-          src={profileImg1}
-          alt={"avatar image"}
+          // src={profileImg1}
+          src="/assets/avatar/9439685.jpg"
+          alt="avatar image"
           className="avatar-images"
           onClick={() => handleAvatarClick(profileImg1)}
+          width={100}
+            height={100}
         />
         <Image
-          src={profileImg2}
-          alt={"avatar image"}
+          // src={profileImg2}
+          src="/assets/avatar/9439833.jpg"
+          alt="avatar image"
           className="avatar-images"
           onClick={() => handleAvatarClick(profileImg2)}
+          width={100}
+            height={100}
         />
+
       </div>
     </div>
   );

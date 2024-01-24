@@ -6,8 +6,11 @@ import { FaTrophy } from "react-icons/fa6";
 import AvatarOption from "./AvatarOption.jsx";
 import { useRouter } from "next/navigation.js";
 
-import profileImg1 from "@/assets/avatar/9439685.jpg";
-import profileImg2 from "@/assets/avatar/9439833.jpg";
+// import profileImg1 from "/assets/avatar/9439685.jpg";
+// import profileImg2 from "/assets/avatar/9439833.jpg";
+
+const profileImg1 = "/assets/avatar/9439685.jpg";
+
 
 export default function ProfilePage({ user, profile }) {
   const router = useRouter();
