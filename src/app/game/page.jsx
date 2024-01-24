@@ -4,18 +4,17 @@ import React, { useRef, useEffect, useState } from "react";
 import {
   floorCollisions,
   platformCollisions,
-} from "../../../components/data/Collisions.js";
+} from "../../components/data/Collisions.js";
 import { Sprite } from "./classes/Sprite.jsx";
 import { Player } from "./classes/Player.jsx";
 import { CollisionBlock } from "./classes/CollisionBlock.jsx";
 import { useRouter } from "next/navigation.js";
 // import level from "../level/page.jsx";
-import { levelData } from "../../../components/MapLevels.jsx";
+import { levelData } from "../../components/MapLevels.jsx";
 
 export default function GameLevel1({ selectedPlayerData, level }) {
   const canvasRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
-
 
   useEffect(() => {
     const canvas = canvasRef.current;

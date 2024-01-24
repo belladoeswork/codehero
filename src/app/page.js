@@ -9,7 +9,7 @@ import Image from "next/image.js";
 // import CodeHero from "/public/assets/Level1.png";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
-import GameLevel1 from "./pages/game/page.jsx";
+import GameLevel1 from "./game/page.jsx";
 
 export const dynamic = "force-dynamic";
 

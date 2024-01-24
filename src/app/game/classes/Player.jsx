@@ -1,6 +1,6 @@
 import { Sprite } from "./Sprite.jsx";
-import collision from "../../../../helpers/utils.js";
-import platformCollision from "../../../../helpers/utils2.js";
+import collision from "../../../helpers/utils.js";
+import platformCollision from "../../../helpers/utils2.js";
 
 const gravity = 0.1;
 
