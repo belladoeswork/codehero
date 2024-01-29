@@ -1,7 +1,7 @@
 import Image from "next/image.js";
-import logo from "@/assets/codeHero/codeHeroLogo.png";
+import logo from "/assets/codeHero/codeHeroLogo.png";
 import Link from "next/link.js";
-import CodeHero from "/public/assets/Level1.png";
+import CodeHero from "/assets/Level1.png";
 import Footer from "@/components/Footer.jsx";
 
 export default function Login() {

@@ -5,6 +5,8 @@ import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image.js";
 import CodeHero from "/public/assets/Level1.png";
+// import CodeHero from "/public/assets/Level1.png";
+
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
 import GameLevel1 from "./game/GameLoop.jsx";

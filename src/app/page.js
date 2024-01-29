@@ -1,4 +1,4 @@
-import Landing from "@/components/Landing";
+import Landing from "@/components/Landing.jsx";
 import { fetchUser } from "@/lib/fetchUser";
 
 export const dynamic = "force-dynamic";
