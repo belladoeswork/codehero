@@ -1,5 +1,5 @@
 import Image from "next/image.js";
-import logo from "../../assets/codeHero/codeHeroLogo.png";
+// import logo from "../../assets/codeHero/codeHeroLogo.png";
 import Link from "next/link.js";
 import Footer from "@/components/Footer.jsx";
 
@@ -8,7 +8,7 @@ export default function Login() {
 
   return (
     <div className="welcome-container">
-      <Image src={logo} alt="logo" className="welcome-logo" />
+      <Image src={"/assets/codeHero/codeHeroLogo.png"} alt="logo" className="welcome-logo" />
       <h1 className="typed-welcome">Thanks for playing CodeHero</h1>
       <Footer />
     </div>
