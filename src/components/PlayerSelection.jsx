@@ -1,9 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import Link from "next/link.js";
-import Game from "./Game.jsx";
-import { Sprite } from "../app/game/classes/Sprite.jsx";
-import { MdExitToApp } from "react-icons/md";
-
+import { Sprite } from "./game/classes/Sprite.jsx";
 
 const playerData = {
   huntress: {
@@ -48,7 +44,24 @@ const playerData = {
         frameRate: 2,
         frameBuffer: 3,
       },
+      AttackLeft: {
+        imageSrc: "/assets/huntress/AttackLeft.png",
+        frameRate: 5,
+        frameBuffer: 3,
+      },
+      AttackRight: {
+        imageSrc: "/assets/huntress/AttackRight.png",
+        frameRate: 5,
+        frameBuffer: 3,
+      },
+      Death: {
+        imageSrc: "/assets/huntress/Death.png",
+        frameRate: 8,
+        frameBuffer: 3,
+      },
     },
+    // interactedItems: interactedItems,
+    // currentItem: currentItem,
   },
 
   warrior: {
@@ -93,11 +106,33 @@ const playerData = {
         frameRate: 2,
         frameBuffer: 3,
       },
+      Attack: {
+        imageSrc: "/assets/warrior/Attack1.png",
+      },
+      AttackLeft: {
+        imageSrc: "/assets/warrior/AttackLeft.png",
+        frameRate: 4,
+        frameBuffer: 3,
+      },
+      AttackRight: {
+        imageSrc: "/assets/warrior/AttackRight.png",
+        frameRate: 4,
+        frameBuffer: 3,
+      },
+      Death: {
+        imageSrc: "/assets/warrior/Death.png",
+        frameRate: 8,
+        frameBuffer: 3,
+      },
     },
+    // interactedItems: interactedItems,
+    // currentItem: currentItem,
   },
 };
 
 export default function playerSelection({ onPlayerSelect }) {
+  // const [currentItem, setCurrentItem] = useState(null);
+  // const [interactedItems, setInteractedItems] = useState({});
   const [selectedPlayer, setSelectedPlayer] = useState(null);
   const [selectedPlayerData, setSelectedPlayerData] = useState(null);
   const canvasRef1 = useRef(null);
@@ -148,7 +183,6 @@ export default function playerSelection({ onPlayerSelect }) {
   }, [selectedPlayerData]);
 
   return (
-    <div>
     <div className="container-box">
       <div className="player-selection">
         <h1 className="title"> Select a Player</h1>
@@ -166,15 +200,6 @@ export default function playerSelection({ onPlayerSelect }) {
             </button>
           </div>
         </div>
-      </div>
-      </div>
-      <div className="backbtn">
-        <Link href={"/"}>
-          <button className="bckhelpoutline">
-            <MdExitToApp className="btnIcon" />
-            <span>Back</span>
-          </button>
-        </Link>
       </div>
     </div>
   );

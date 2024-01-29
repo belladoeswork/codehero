@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Sprite } from "../app/game/classes/Sprite.jsx";
+import { Sprite } from "./game/classes/Sprite.jsx";
 import {
   floorCollisions,
   platformCollisions,
@@ -7,22 +7,27 @@ import {
   platformCollisions1,
   floorCollisions2,
   platformCollisions2,
-  floorCollisions3,
-  platformCollisions3,
 } from "./data/Collisions.js";
 
 const levelData = {
-  level1: {
+  1: {
     imageSrc: "/assets/map1.png",
     floorCollisions: floorCollisions,
     platformCollisions: platformCollisions,
+    collisionSymbol: 21557,
   },
-  level2: {
-    imageSrc: "/assets/maplev2.png",
+  2: {
+    imageSrc: "/assets/map2.png",
     floorCollisions: floorCollisions1,
     platformCollisions: platformCollisions1,
+    collisionSymbol: 21835,
   },
-  // more levels
+  3: {
+    imageSrc: "/assets/map3.png",
+    floorCollisions: floorCollisions2,
+    platformCollisions: platformCollisions2,
+    collisionSymbol: 21835,
+  },
 };
 
 export default function levels() {
@@ -33,7 +38,7 @@ export default function levels() {
       <div>
         <div>
           <div className="">
-            <canvas ref={canvasRef}></canvas>
+            <canvas ref={canvasRef} className="gameCanvas"></canvas>
           </div>
         </div>
       </div>
