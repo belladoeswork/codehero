@@ -6,7 +6,7 @@ import PlayerSelection from "@/components/PlayerSelection.jsx";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image.js";
-import CodeHero from "/public/assets/Level1.png";
+// import CodeHero from "/public/assets/Level1.png";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
 import GameLevel1 from "./game/GameLoop.jsx";
@@ -79,7 +79,7 @@ export default function Landing({ user }) {
           </div>
         </div>
         <div id="homepage-right-container">
-          <Image src={CodeHero} alt="Level One Map" className="homepage-img" />
+          <Image src={"/assets/Level1.png"} alt="Level One Map" width={480} height={272} className="homepage-img" />
         </div>{" "}
       </div>
       <Footer />
