@@ -27,6 +27,7 @@ export default function ConfettiPage() {
   );
 }
 
+
 /* drawShape={(ctx) => {
         ctx.beginPath();
         ctx.moveTo(12, 6);

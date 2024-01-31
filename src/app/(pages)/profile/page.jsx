@@ -9,9 +9,9 @@ import { prisma } from "@/lib/prisma.js";
 
 export default async function Profile({ avatar }) {
   const user = await fetchUser();
-  // const profile = await prisma.user.findFirst({
-  //   where: { userId: user.Id },
-  // });
+  const profile = await prisma.user.findFirst({
+    where: { userId: user.Id },
+  });
 
   if (!user) {
     return <div>Loading...</div>;
@@ -19,7 +19,7 @@ export default async function Profile({ avatar }) {
 
   return (
     <div>
-      <ProfilePage user={user} />
+      <ProfilePage user={user} profile={profile} />
     </div>
   );
 }

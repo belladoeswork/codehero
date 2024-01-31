@@ -7,16 +7,16 @@ import NextLevelTransition from "./NextLevelTransition";
 import { IoIosHelpCircleOutline } from "react-icons/io";
 import WinGameDisplay from "./WinGameDisplay.jsx";
 import GameOver from "./GameOver.jsx";
+import Confetti from "@/components/ConfettiPage.jsx";
 
 export default function Quiz({
   question,
-  questions,
-  currentItem,
   showPopup,
+  currentItem,
   interactedItems,
   gameOver,
   currentQuestion,
-  currentQuestionInde,
+  currentQuestionIndex,
   setCurrentQuestion,
   setShowPopup,
   setGameOver,
@@ -25,9 +25,12 @@ export default function Quiz({
   score,
   setScore,
   onAnsswerQuestion,
+  loseGame,
+  setLoseGame,
+  user,
+  // winGame,
+  // setWinGame,
 }) {
-  // const [level, setLevel] = useState(0);
-  // const [score, setScore] = useState(0);
   const [showOptions, setShowOptions] = useState(true);
   const [resultMessage, setResultMessage] = useState("");
   const [secretWord, setSecretWord] = useState("");
@@ -35,20 +38,35 @@ export default function Quiz({
   const [showHint, setShowHint] = useState(false);
   const [transition, setTransition] = useState(false);
   const [winGame, setWinGame] = useState(false);
-  const [loseGame, setLoseGame] = useState(false);
 
   async function handleAnswer(isCorrect) {
+    setResultMessage("");
     if (isCorrect && question?.type !== "message") {
       setResultMessage("Correct");
+      setTimeout(() => {
+        setResultMessage("");
+      }, 2000);
+
       onAnsswerQuestion();
       setSecretWord(question?.resultMessage.correct);
       setScore(score + 1);
       setShowHint(false);
-      if ((score + 1) % 5 === 0) {
-        // if (score + 1 < questions.length) {
+
+      if ((score + 1) % 2 === 0) {
         if (level + 1 < 4) {
           setTransition(true);
           setResultMessage("");
+
+          // const response = await fetch(`/api/users/${user.id}`, {
+          //   method: "PUT",
+          //   headers: {
+          //     "Content-Type": "application/json",
+          //   },
+          //   body: JSON.stringify({
+          //     userId: user.id,
+          //     level,
+          //   }),
+          // });
           setTimeout(() => {
             setLevel(level + 1);
             setTransition(false);
@@ -140,10 +158,10 @@ export default function Quiz({
         )}
       </div>
       <h2 className="result-message">{resultMessage}</h2>
-      {/* {resultMessage && <p className="result-message">{resultMessage}</p>} */}
       <div>{transition && <NextLevelTransition />}</div>
       <div>{loseGame && <GameOver />}</div>
       <div>{winGame && <WinGameDisplay />}</div>
+      <div>{winGame && <Confetti />}</div>
     </div>
   );
 }

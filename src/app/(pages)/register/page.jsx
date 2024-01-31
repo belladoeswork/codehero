@@ -32,7 +32,7 @@ export default function Register() {
 
   return (
     <div className="login-register-container">
-      <Image className="login-register-logo" src={"/assets/codeHero/codeHeroLogo.png"} alt="CodeHero Logo" />
+      <Image className="login-register-logo" src={"/assets/codeHero/codeHeroLogo.png"} alt="CodeHero Logo" width={150} height={150} />
       <h1 className="typed-login">Welcome to CodeHero</h1>
 
       <form onSubmit={handleRegister}>

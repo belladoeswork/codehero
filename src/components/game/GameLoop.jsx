@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useRef, useEffect, useState, useCallback } from "react";
+import React, {
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useMemo,
+} from "react";
 import { floorCollisions, platformCollisions } from "../data/Collisions.js";
 import { Sprite } from "./classes/Sprite.jsx";
 import { Player } from "./classes/Player.jsx";
@@ -34,15 +40,25 @@ import {
   Moon,
   Box,
 } from "./classes/StaticSprite.jsx";
+import { IoMdAlarm } from "react-icons/io";
+
+import Loader from "./loading.jsx";
 
 export default function GameLevel1({
   selectedPlayerData,
   level,
   setLevel,
   timeRemaining,
+  loseGame,
+  setLoseGame,
+  user,
+  winGame,
+  setWinGame,
 }) {
   const canvasRef = useRef(null);
   const [isPaused, setIsPaused] = useState(false);
+  // const location = useLocation();
+
   const [showPopup, setShowPopup] = useState(false);
   const [currentItem, setCurrentItem] = useState(null);
   // const [interactedItems, setInteractedItems] = useState({});
@@ -53,6 +69,63 @@ export default function GameLevel1({
   const [score, setScore] = useState(0);
   const [assetsLoaded, setAssetsLoaded] = useState(false);
 
+  // loading all assets
+  useEffect(() => {
+    const loadAsset = (src) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.onload = resolve;
+        img.onerror = reject;
+        img.src = src;
+      });
+    };
+
+    const assets = [
+      "/assets/npcs/Rocks.png",
+      "/assets/npcs/Rock3.png",
+      "/assets/npcs/Cat.png",
+      "/assets/npcs/BoarIdle.png",
+      "/assets/npcs/Worm/Idle.png",
+      "/assets/npcs/Man.png",
+      "/assets/npcs/Chest.png",
+      "/assets/npcs/GemGold.png",
+      "/assets/huntress/Idle.png",
+      "/assets/huntress/Run.png",
+      "/assets/huntress/Jump.png",
+      "/assets/huntress/Fall.png",
+      "/assets/huntress/FallLeft.png",
+      "/assets/huntress/RunLeft.png",
+      "/assets/huntress/IdleLeft.png",
+      "/assets/huntress/JumpLeft.png",
+      "/assets/huntress/AttackLeft.png",
+      "/assets/huntress/AttackRight.png",
+      "/assets/huntress/Death.png",
+      "/assets/bee.png",
+      "/assets/map1.png",
+      "/assets/map2.png",
+      "/assets/map3.png",
+
+      "/assets/npcs/BoarIdle.png",
+      "/assets/npcs/GemGreen.png",
+      "/assets/npcs/Worm/Idle.png",
+    ];
+
+    Promise.all(assets.map(loadAsset)).then(() => {
+      setAssetsLoaded(true);
+    });
+  }, []);
+
+  // const randomizedQuestions = useMemo(() => {
+  //   return questions.map((question) => {
+  //     if (question.type === "message") return question;
+  //     const randomIndex = Math.floor(Math.random() * sprites.length);
+  //     const randomSprite = sprites[randomIndex];
+
+  //     return { ...question, sprite: randomSprite || question.sprite };
+  //   });
+  // }, []);
+
+  // console.log("randomizedQuestions", randomizedQuestions);
 
   useEffect(() => {
     localStorage.removeItem("correctAnswerIds");
@@ -60,10 +133,23 @@ export default function GameLevel1({
 
   // const router = useRouter();
 
+  // const navigate = useNavigate();
+  // const location = useLocation();
+
+  // useEffect(() => {
+  //   if (location.pathname === '/howto') {
+  //     // Pause your game here
+  //     setIsPaused(true);
+  //   } else {
+  //     // Resume your game here
+  //     setIsPaused(false);
+  //   }
+  // }, [location]);
+
   const closeWelcome = () => {
     setShowWelcome(false);
   };
-  // for extras?
+  // bees
   const bees = useRef([]);
   const extraPropTimer = useRef(0);
   const extraPropInterval = 1000;
@@ -78,11 +164,11 @@ export default function GameLevel1({
   }
 
   // score/level
-  const scoreRef = useRef(0); 
-  const levelRef = useRef(0); 
+  const scoreRef = useRef(0);
+  const levelRef = useRef(0);
 
   useEffect(() => {
-    scoreRef.current = score; 
+    scoreRef.current = score;
     levelRef.current = level;
   }, [score, level]);
 
@@ -93,26 +179,10 @@ export default function GameLevel1({
     timerRef.current = timeRemaining;
   }, [timeRemaining]);
 
-  // handle gaps
-  // useEffect(() => {
-  //   if (document.fullscreenElement) {
-  //     document.body.classList.add('fullscreen');
-  //   } else {
-  //     document.body.classList.remove('fullscreen');
-  //   }
-  // }, [document.fullscreenElement]);
-
- 
-
   // canvas
   useEffect(() => {
     const canvas = canvasRef.current;
-
     const context = canvas.getContext("2d");
-
-     // added now
-  // canvas.style.height = '100%';
-
     const currentLevelData = levelData[level];
 
     if (!currentLevelData) {
@@ -120,13 +190,13 @@ export default function GameLevel1({
       return;
     }
 
-    // canvas.width = 1024;
-    // canvas.height = 576;
+    canvas.width = 1024;
+    canvas.height = 576;
 
-    // const scaledCanvas = {
-    //   width: canvas.width / 4,
-    //   height: canvas.height / 4,
-    // };
+    const scaledCanvas = {
+      width: canvas.width / 4,
+      height: canvas.height / 4,
+    };
 
     // canvas.width = window.innerWidth;
     // canvas.height = window.innerHeight;
@@ -144,81 +214,46 @@ export default function GameLevel1({
 
     // window.addEventListener('resize', handleResize);
 
-
-
-
-
-
-
-    const originalCanvas = {
-      width: canvas.width,
-      height: canvas.height,
-    };
-
-    let scaledCanvas = {
-      width: canvas.width / 4,
-      height: canvas.height / 4,
-    };
-
-
-
-    const resize = () => {
-
-    // const resize = (width, height) => {
-
-  // Maintain the aspect ratio of the original canvas
-  // const aspectRatio = originalCanvas.width / originalCanvas.height;
-
-  // // Calculate the new height based on the width and aspect ratio
-  // const newHeight = width / aspectRatio;
-
-  // // If the new height is greater than the window height, adjust the width instead
-  // if (newHeight > height) {
-  //   width = height * aspectRatio;
-  // } else {
-  //   height = newHeight;
-  // }
-
-  let width = window.innerWidth;
-  let height = window.innerHeight;
-  const aspectRatio = originalCanvas.width / originalCanvas.height;
-  const newHeight = width / aspectRatio;
-  if (newHeight > height) {
-    width = height * aspectRatio;
-  } else {
-    height = newHeight;
-  }
-
-      //
-      canvas.width = width;
-      canvas.height = height;
-      context.setTransform(1, 0, 0, 1, 0, 0); 
-      context.scale(
-        canvas.width / originalCanvas.width,
-        canvas.height / originalCanvas.height
-      );
-
-      // Update scaledCanvas
-      scaledCanvas = {
-        width: canvas.width / 4,
-        height: canvas.height / 4,
-      };
-    };
-
-    // Initial resize
-    // resize(window.innerWidth, window.innerHeight);
-
-    // const handleResize = (e) => {
-    //   resize(e.target.innerWidth, e.target.innerHeight);
+    // const originalCanvas = {
+    //   width: canvas.width,
+    //   height: canvas.height,
     // };
 
-    // window.addEventListener("resize", handleResize);
+    // let scaledCanvas = {
+    //   width: canvas.width / 4,
+    //   height: canvas.height / 4,
+    // };
 
-    resize();
-    window.addEventListener('resize', resize);
-  
+    // const resize = () => {
 
+    //   let width = window.innerWidth;
+    //   let height = window.innerHeight;
+    //   const aspectRatio = originalCanvas.width / originalCanvas.height;
+    //   const newHeight = width / aspectRatio;
+    //   if (newHeight > height) {
+    //     width = height * aspectRatio;
+    //   } else {
+    //     height = newHeight;
+    //   }
 
+    //   //
+    //   canvas.width = width;
+    //   canvas.height = height;
+    //   context.setTransform(1, 0, 0, 1, 0, 0);
+    //   context.scale(
+    //     canvas.width / originalCanvas.width,
+    //     canvas.height / originalCanvas.height
+    //   );
+
+    //   // Update scaledCanvas
+    //   scaledCanvas = {
+    //     width: canvas.width / 4,
+    //     height: canvas.height / 4,
+    //   };
+    // };
+
+    // resize();
+    // window.addEventListener("resize", resize);
 
     const floorCollisions2D = [];
     for (let i = 0; i < currentLevelData.floorCollisions.length; i += 36) {
@@ -288,6 +323,9 @@ export default function GameLevel1({
         pressed: false,
       },
       Enter: {
+        pressed: false,
+      },
+      s: {
         pressed: false,
       },
     };
@@ -641,6 +679,15 @@ export default function GameLevel1({
 
     let lastTime = 0;
 
+    ///remove
+    const renderLoadingScreen = () => {
+      context.fillStyle = "black";
+      context.fillRect(0, 0, canvas.width, canvas.height);
+      context.fillStyle = "white";
+      context.fillText("Loading...", canvas.width / 2, canvas.height / 2);
+    };
+    ////
+
     const animate = (currentTime) => {
       if (!isPaused) {
         window.requestAnimationFrame(animate);
@@ -648,15 +695,19 @@ export default function GameLevel1({
       context.fillStyle = "white";
       context.fillRect(0, 0, canvas.width, canvas.height);
 
-
-
       // added
-      context.setTransform(1, 0, 0, 1, 0, 0);
+      // context.setTransform(1, 0, 0, 1, 0, 0);
 
       context.save();
       context.scale(4, 4);
       context.translate(camera.position.x, camera.position.y);
       background.update();
+
+      // off screen for level3?
+      if (player.position.y > canvas.height) {
+        setLoseGame(true);
+        return;
+      }
 
       player.checkForHorizontalCanvasCollision();
       player.update();
@@ -737,63 +788,7 @@ export default function GameLevel1({
         else player.switchSprite("FallLeft");
       }
 
-     // font for the text
-      // Fullscreen functionality
-      // if (keys.f.pressed) {
-      //   if (!document.fullscreenElement) {
-      //     document.documentElement.requestFullscreen();
-      //   }
-      // } else if (keys.r.pressed) {
-      //   if (document.fullscreenElement) {
-      //     document.exitFullscreen();
-      //   }
-      // }
-
-      // added for attacks
-      // if (keys.d.pressed) {
-      //   player.switchSprite("AttackRight");
-      //   player.velocity.x = 2;
-      //   player.lastDirection = "right";
-      //   player.shouldPanCameraToTheLeft({ canvas, camera });
-      // } else if (keys.a.pressed) {
-      //   player.switchSprite("AttackLeft");
-      //   player.velocity.x = -2;
-      //   player.lastDirection = "left";
-      //   player.shouldPanCameraToTheRight({ canvas, camera });
-      // }
-
-      // context.fillStyle = "rgba(0, 0, 0, 0.5)";
-      // context.fillRect(10 - camera.position.x, 30 - camera.position.y, 200, 70);
-
-      // // Draw score and level
-      // context.font = '12px "Press Start 2P"';
-      // context.fillStyle = "#F2F5FF";
-
-      // context.fillText(
-      //   "Score:",
-      //   10 - camera.position.x,
-      //   50 - camera.position.y
-      // );
-      // context.fillText(
-      //   "Level:",
-      //   10 - camera.position.x,
-      //   90 - camera.position.y
-      // );
-
-      // // Draw  numbers for score and level
-      // context.fillStyle = "#2274a5";
-      // context.fillText(
-      //   scoreRef.current,
-      //   100 - camera.position.x,
-      //   50 - camera.position.y
-      // );
-      // context.fillText(
-      //   levelRef.current,
-      //   100 - camera.position.x,
-      //   90 - camera.position.y
-      // );
-
-      // Set the font and color for the text
+      //  score and level
       context.font = '5px "Press Start 2P"';
 
       // score box
@@ -808,10 +803,8 @@ export default function GameLevel1({
         10 - camera.position.x,
         10 - camera.position.y
       );
-      
-      // level box
 
-      // Draw the level box
+      // level box
       context.fillStyle = "rgba(0, 0, 0, 0.5)";
       context.fillRect(60 - camera.position.x, 2 - camera.position.y, 50, 10);
       context.strokeRect(60 - camera.position.x, 2 - camera.position.y, 50, 10);
@@ -820,6 +813,30 @@ export default function GameLevel1({
         "Level: " + levelRef.current,
         65 - camera.position.x,
         10 - camera.position.y
+      );
+
+      // timer
+      context.fillStyle = "rgba(0, 0, 0, 0.5)";
+      const minutes = Math.floor(timerRef.current / 60);
+      const seconds = (timerRef.current % 60).toString().padStart(2, "0");
+      const timeDisplay = `${minutes}:${seconds}`;
+      context.fillRect(215 - camera.position.x, 2 - camera.position.y, 28, 10);
+      context.fillStyle = "#F2F5FF";
+      context.fillText(
+        timeDisplay,
+        220 - camera.position.x,
+        10 - camera.position.y
+      );
+
+      // icon
+      context.font = '13px "Press Start 2P"';
+      context.fillStyle = "rgba(0, 0, 0, 0.5)";
+      context.fillRect(205 - camera.position.x, 2 - camera.position.y, 10, 10);
+      context.fillStyle = "#F2F5FF";
+      context.fillText(
+        "\u23F1 ",
+        206 - camera.position.x,
+        11 - camera.position.y
       );
 
       context.restore();
@@ -831,21 +848,18 @@ export default function GameLevel1({
       switch (event.key) {
         case "ArrowRight":
           keys.ArrowRight.pressed = true;
+
           break;
 
         case "ArrowLeft":
           keys.ArrowLeft.pressed = true;
+
           break;
 
         case "ArrowUp":
           player.velocity.y = -4;
+
           break;
-        // case "a":
-        //   keys.a.pressed = true;
-        //   break;
-        // case "d":
-        //   keys.d.pressed = true;
-        //   break;
         case "Enter":
           const items = {
             rock: level === 1 ? rock : undefined,
@@ -862,6 +876,7 @@ export default function GameLevel1({
             // man2: level === 2 ? man2 : undefined,
             gemgreen: level === 2 ? gemgreen : undefined,
             box: level === 2 ? box : undefined,
+            // man3: level === 3 ? man3 : undefined,
             moon: level === 3 ? moon : undefined,
             snail: level === 3 ? snail : undefined,
             goldchest: level === 3 ? goldchest : undefined,
@@ -889,6 +904,7 @@ export default function GameLevel1({
               }
             }
           });
+
           break;
       }
     });
@@ -904,16 +920,23 @@ export default function GameLevel1({
       }
     });
 
-    // const endOfGame = (gameOver) => {
-    //   if (gameOver) {
-    //     console.log("Game Over");
-    //     setTimeout(() => {
-    //       window.location.replace("/gameover");
-    //     }, 8000);
-    //     return;
-    //   }
-    // };
-    // endOfGame(gameOver);
+    // canvas.addEventListener("click", (event) => {
+    //   const rect = canvas.getBoundingClientRect();
+    //   const x = event.clientX - rect.left;
+    //   const y = event.clientY - rect.top;
+
+    // });
+
+    const endOfGame = (gameOver) => {
+      if (gameOver) {
+        console.log("Game Over");
+        setTimeout(() => {
+          window.location.replace("/gameover");
+        }, 8000);
+        return;
+      }
+    };
+    endOfGame(gameOver);
   }, [selectedPlayerData, level, isPaused]);
 
   const isQuestionAnswered = (question) => {
@@ -934,7 +957,7 @@ export default function GameLevel1({
   }, [currentQuestion]);
 
   return (
-    <div>
+    <div id="game">
       <canvas ref={canvasRef} />
       {showWelcome && (
         <div className="gameWelcomeModelContainter">
@@ -950,11 +973,7 @@ export default function GameLevel1({
               <span style={{ color: "#2274a5", fontWeight: "bolder" }}>
                 Press Enter
               </span>
-              , as the seeker you were. <br />
-              Find and answer the questions to prove your worth, <br />
-              Show your wisdom, affirm your birth. <br />
-              For if you succeed in this cerebral sob, <br /> A grand reward
-              awaits: you're ready for a job!
+              , as the seeker you were. <br /> <br />
             </p>
           </div>
         </div>
@@ -970,32 +989,18 @@ export default function GameLevel1({
           currentQuestion={currentQuestion}
           setCurrentQuestion={setCurrentQuestion}
           currentQuestionIndex={currentQuestionIndex}
-          questions={questions}
           setLevel={setLevel}
           level={level}
           setScore={setScore}
           score={score}
           onAnsswerQuestion={onAnsswerQuestion}
+          loseGame={loseGame}
+          setLoseGame={setLoseGame}
+          user={user}
+          winGame={winGame}
+          setWinGame={setWinGame}
         />
       )}
-      {/* <div
-        style={{
-          display: "flex",
-          alignItems: "end",
-          justifyContent: "center",
-          backgroundColor: "#F2F5FF",
-          flexDirection: "row",
-          gap: "100px",
-          fontSize: "30px",
-        }}
-      >
-        <h2>
-          Score: <span style={{ color: "#2274a5" }}>{score}</span>
-        </h2>
-        <h2>
-          Level: <span style={{ color: "#2274a5" }}>{level}</span>
-        </h2>
-      </div> */}
     </div>
   );
 }
