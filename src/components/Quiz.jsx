@@ -54,7 +54,7 @@ export default function Quiz({
       setScore(score + 1);
       setShowHint(false);
 
-      if ((score + 1) % 1 === 0) {
+      if ((score + 1) % 5 === 0) {
         if (level + 1 < 4) {
           setTransition(true);
           setResultMessage("");
