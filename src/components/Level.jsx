@@ -16,7 +16,9 @@ import { CiStickyNote } from "react-icons/ci";
 import GameOver from "@/components/GameOver.jsx";
 import WinGameDisplay from "./WinGameDisplay.jsx";
 import GameLevel1 from "./game/GameLoop.jsx";
-import Loading from "./game/Loading.jsx";
+// import Loading from "./Loading.jsx";
+import Loading from "@/components/Loading.jsx";
+
 import HowToScreen from "@/app/(pages)/howto/page.jsx";
 
 export default function LevelPage({ user, note }) {

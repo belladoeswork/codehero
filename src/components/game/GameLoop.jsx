@@ -42,7 +42,7 @@ import {
 } from "./classes/StaticSprite.jsx";
 import { IoMdAlarm } from "react-icons/io";
 
-import Loader from "./Loading.jsx";
+import Loading from "@/components/Loading.jsx";
 
 export default function GameLevel1({
   winGame,
