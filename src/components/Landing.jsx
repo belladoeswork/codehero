@@ -6,7 +6,6 @@ import PlayerSelection from "@/components/PlayerSelection.jsx";
 import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image.js";
-// import CodeHero from "/public/assets/Level1.png";
 import { IoIosArrowDropdown } from "react-icons/io";
 import { IoIosArrowDropup } from "react-icons/io";
 import GameLevel1 from "./game/GameLoop.jsx";
@@ -28,12 +27,10 @@ export default function Landing({ user }) {
             <h1 className="typed">A JavaScript Escape Jungle</h1>
           </div>
           <div className="home-description">
-            <p>Welcome to CodeHero!</p>
-            <p>
+            <p>Welcome to CodeHero!
               A game where you test your knowledge on your journey to becoming a
               Javascript master coder.
-            </p>
-            <p>Ready to start your odyssey?</p>
+            Ready to start your odyssey?</p>
             <p>
               Sharpen your mind, prepare your keyboard, and step into the world
               of

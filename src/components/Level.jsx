@@ -16,7 +16,6 @@ import { CiStickyNote } from "react-icons/ci";
 import GameOver from "@/components/GameOver.jsx";
 import WinGameDisplay from "./WinGameDisplay.jsx";
 import GameLevel1 from "./game/GameLoop.jsx";
-// import Loading from "./Loading.jsx";
 import Loading from "@/components/Loading.jsx";
 
 import HowToScreen from "@/app/(pages)/howto/page.jsx";
@@ -26,7 +25,7 @@ export default function LevelPage({ user, note }) {
   const [selectedPlayerData, setSelectedPlayerData] = useState(null);
   const [isMuted, setIsMuted] = useState(false);
   const audioElement = useRef(null);
-  const [timeRemaining, setTimeRemaining] = useState(4 * 60);
+  const [timeRemaining, setTimeRemaining] = useState(10 * 60);
   const [level, setLevel] = useState(1);
   const [loseGame, setLoseGame] = useState(false);
   const [showNote, setShowNote] = useState(false);
@@ -158,23 +157,6 @@ export default function LevelPage({ user, note }) {
           {gameStarted && selectedPlayerData && (
         <div style={{ display: "flex", justifyContent: "center" }}>
           {loseGame && (<GameOver />)}
-          {/* {winGame && (<WinGameDisplay />)} */}
-
-
-
-
-
-
-
-          {/* {loseGame ? (
-
-            <GameOver />
-            
-          ) : winGame ? (
-              <WinGameDisplay />
-              
-              ) : (
-                <> */}
                   <GameLevel1
                     winGame={winGame}
                     setWinGame={setWinGame}
@@ -187,20 +169,10 @@ export default function LevelPage({ user, note }) {
                     loseGame={loseGame}
                     setLoseGame={setLoseGame}
                   />
-                {/* </>
-          
-
-              )} */}
             </div>
           )}
           {gameStarted && selectedPlayerData && (
             <div id="controls">
-              {/* {loseGame ? (
-                <GameOver />
-              ) : winGame ? (
-                <WinGameDisplay />
-              ) : (
-                <> */}
                   <span className="btnhelp">
                     <Tippy
                       placement="top"
@@ -271,12 +243,8 @@ export default function LevelPage({ user, note }) {
                   <div className="textEditor-popup">
                     {showNote && <TextEditor user={user} note={note} />}
                   </div>
-                {/* </>
-              )} */}
             </div>
           )}
-        {/* </>
-      )} */}
     </div>
   );
 }

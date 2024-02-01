@@ -30,8 +30,6 @@ export default function Quiz({
   loseGame,
   setLoseGame,
   user,
-  // winGame,
-  // setWinGame,
 }) {
   const [showOptions, setShowOptions] = useState(true);
   const [resultMessage, setResultMessage] = useState("");
@@ -39,7 +37,6 @@ export default function Quiz({
   const [inputAnswer, setInputAnswer] = useState("");
   const [showHint, setShowHint] = useState(false);
   const [transition, setTransition] = useState(false);
-  // const [winGame, setWinGame] = useState(false);
 
   function handleAnswer(isCorrect) {
     setResultMessage("");
@@ -58,17 +55,6 @@ export default function Quiz({
         if (level + 1 < 4) {
           setTransition(true);
           setResultMessage("");
-
-          // const response = await fetch(`/api/users/${user.id}`, {
-          //   method: "PUT",
-          //   headers: {
-          //     "Content-Type": "application/json",
-          //   },
-          //   body: JSON.stringify({
-          //     userId: user.id,
-          //     level,
-          //   }),
-          // });
           setTimeout(() => {
             setLevel(level + 1);
             setTransition(false);
@@ -88,12 +74,6 @@ export default function Quiz({
       setLoseGame(true);
       setShowPopup(false);
     }
-
-    // questions?.map((quest) => {
-    //   if (quest.id === question.id) {
-    //     question.isAnswered = true;
-    //   }
-    // });
   }
 
   function handleHint() {
