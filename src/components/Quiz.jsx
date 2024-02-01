@@ -41,7 +41,7 @@ export default function Quiz({
   const [transition, setTransition] = useState(false);
   // const [winGame, setWinGame] = useState(false);
 
-  async function handleAnswer(isCorrect) {
+  function handleAnswer(isCorrect) {
     setResultMessage("");
     if (isCorrect && question?.type !== "message") {
       setResultMessage("Correct");
@@ -54,7 +54,7 @@ export default function Quiz({
       setScore(score + 1);
       setShowHint(false);
 
-      if ((score + 1) % 2 === 0) {
+      if ((score + 1) % 1 === 0) {
         if (level + 1 < 4) {
           setTransition(true);
           setResultMessage("");
@@ -161,7 +161,7 @@ export default function Quiz({
       </div>
       <h2 className="result-message">{resultMessage}</h2>
       <div>{transition && <NextLevelTransition />}</div>
-      <div>{loseGame && <GameOver />}</div>
+      {/* <div>{loseGame && <GameOver />}</div> */}
       <div>{winGame && <WinGameDisplay />}</div>
       <div>{winGame && <Confetti />}</div>
     </div>

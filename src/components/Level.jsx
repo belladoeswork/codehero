@@ -142,26 +142,39 @@ export default function LevelPage({ user, note }) {
 
   return (
     <div className="game-container">
-      {!assetsLoaded ? (
+      {/* {!assetsLoaded ? (
         <Loading />
-      ) : // {
+      ) : //  */}
+        {/* {
       loseGame ? (
         <GameOver />
       ) : winGame ? (
         <WinGameDisplay />
       ) : (
-        <>
+        <> */}
           {!gameStarted && (
             <PlayerSelection onPlayerSelect={handlePlayerSelect} />
           )}
           {gameStarted && selectedPlayerData && (
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              {loseGame ? (
-                <GameOver />
-              ) : winGame ? (
-                <WinGameDisplay />
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          {loseGame && (<GameOver />)}
+          {/* {winGame && (<WinGameDisplay />)} */}
+
+
+
+
+
+
+
+          {/* {loseGame ? (
+
+            <GameOver />
+            
+          ) : winGame ? (
+              <WinGameDisplay />
+              
               ) : (
-                <>
+                <> */}
                   <GameLevel1
                     winGame={winGame}
                     setWinGame={setWinGame}
@@ -174,18 +187,20 @@ export default function LevelPage({ user, note }) {
                     loseGame={loseGame}
                     setLoseGame={setLoseGame}
                   />
-                </>
-              )}
+                {/* </>
+          
+
+              )} */}
             </div>
           )}
           {gameStarted && selectedPlayerData && (
             <div id="controls">
-              {loseGame ? (
+              {/* {loseGame ? (
                 <GameOver />
               ) : winGame ? (
                 <WinGameDisplay />
               ) : (
-                <>
+                <> */}
                   <span className="btnhelp">
                     <Tippy
                       placement="top"
@@ -204,7 +219,7 @@ export default function LevelPage({ user, note }) {
                     <span>&gt;</span>Move
                   </span>
                   <span>
-                    <span class="rotate">&lt;</span>Jump
+                    <span className="rotate">&lt;</span>Jump
                   </span>
                   <span className="btnhelp">
                     <Tippy placement="top" content="Help">
@@ -256,12 +271,12 @@ export default function LevelPage({ user, note }) {
                   <div className="textEditor-popup">
                     {showNote && <TextEditor user={user} note={note} />}
                   </div>
-                </>
-              )}
+                {/* </>
+              )} */}
             </div>
           )}
-        </>
-      )}
+        {/* </>
+      )} */}
     </div>
   );
 }
